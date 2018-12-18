@@ -1,0 +1,94 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+<dom-module id="login-component">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="sign" hidden="{{divShow}}">
+      <h2>Iniciar sesíon</h2>
+      <h3>¿Aun no tienes cuenta?</h3>
+      <paper-button on-tap="changeDiv">Registrate</paper-button>
+      <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
+      <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
+      <paper-button on-tap="login">Iniciar sesíon</paper-button>
+    </div>
+    <div class="createAccount"  hidden="{{!divShow}}">
+      <h2>Registro</h2>
+      <h2>Datos de usuario</h2>
+      <paper-input label="Nombre Completo" value="{{name}}"></paper-input>
+      <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
+      <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
+      <paper-input label="Repita contraseña" type="password" value="{{passwordConfirm}}"></paper-input>
+      <paper-button on-tap="createAccount">REGISTRAR</paper-button>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `login-component`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class LoginComponent extends Polymer.Element {
+      static get is() { return 'login-component'; }
+      static get properties() {
+        return {
+          username: {
+            type: String,
+            value: ''
+          },
+          password:{
+            type: String,
+            value: ''
+          },
+          passwordConfirm:{
+            type:String,
+            value:''
+          },
+          name:{
+            type:String,
+            value:''
+          },
+          divShow:{
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+      login(){
+        if (this.username == 'Leonidas92' && this.password == 'Polymer') {
+            alert('Login EXITOSO Usuario: '+ this.username + ' Pass: '+ this.password)
+            this.username = ''
+            this.password = ''
+        } else {
+            alert('El usuario y/o contraseña con incorrectos, intente nuevamente')
+        }
+      }
+      createAccount(){
+        if (this.password == this.passwordConfirm) {
+            alert('Registro EXITOSO: '+ this.passwordConfirm + ' Pass: '+ this.password)
+            this.username = ''
+            this.password = ''
+            this.passwordConfirm =''
+            this.name = ''
+            this.divShow = false;
+        } else {
+            alert('Las contraseñas no coinciden, intente nuevamente')
+        }
+      }
+      changeDiv(){
+        this.divShow = !this.divShow;
+      }
+    }
+
+    window.customElements.define(LoginComponent.is, LoginComponent);
+  </script>
+</dom-module>
