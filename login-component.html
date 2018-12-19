@@ -7,6 +7,7 @@
     <style>
       :host {
         display: block;
+        --paper-input-container-focus-color:red;
       }
     </style>
     <div class="sign" hidden="{{divShow}}">
@@ -64,7 +65,7 @@
         };
       }
       login(){
-        if (this.username == 'Leonidas92' && this.password == 'Polymer') {
+        if (this.username === 'Leonidas92' && this.password === 'Polymer') {
             alert('Login EXITOSO Usuario: '+ this.username + ' Pass: '+ this.password)
             this.username = ''
             this.password = ''
@@ -73,15 +74,19 @@
         }
       }
       createAccount(){
-        if (this.password == this.passwordConfirm) {
+        if (this.password !== '' || this.passwordConfirm !=='') {
+          if (this.password === this.passwordConfirm) {
             alert('Registro EXITOSO: '+ this.passwordConfirm + ' Pass: '+ this.password)
             this.username = ''
             this.password = ''
             this.passwordConfirm =''
             this.name = ''
             this.divShow = false;
+          } else {
+              alert('Las contraseñas no coinciden, intente nuevamente')
+          }
         } else {
-            alert('Las contraseñas no coinciden, intente nuevamente')
+              alert('Ingrese las contraseñas')
         }
       }
       changeDiv(){
