@@ -22,21 +22,21 @@
       <h2>Iniciar sesíon</h2>
       <p>¿Aun no tienes cuenta? Da clic</p>
       <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
-      <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
-      <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
-      <paper-button on-tap="login" class="pink">Iniciar sesíon</paper-button>
+      <paper-input label="[[languageSelected.name]]" value="{{username}}"></paper-input>
+      <paper-input label="[[languageSelected.lastName]]" type="password" value="{{password}}"></paper-input>
+      <paper-button on-tap="login" class="pink">[[languageSelected.sesion]]</paper-button>
     </div>
     <div class="createAccount"  hidden="{{!divShow}}">
       <h2>Registro</h2>
       <p>¿Ya tienes cuenta? Da clic</p>
       <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
       <h2>Datos de usuario</h2>
-      <paper-input label="[[]]Nombres" value="{{name}}"></paper-input>
-      <paper-input label="[[]]Apellidos" value="{{lastName}}"></paper-input>
-      <paper-input label="[[]]Edad" value="{{age}}"></paper-input>
-      <paper-input label="[[]]Nombre de usuario" value="{{username}}"></paper-input>
-      <paper-input label="[[]]Contraseña" type="password" value="{{password}}"></paper-input>
-      <paper-input label="[[]]Repita contraseña" type="password" value="{{passwordConfirm}}"></paper-input>
+      <paper-input label="Nombres" value="{{name}}"></paper-input>
+      <paper-input label="Apellidos" value="{{lastName}}"></paper-input>
+      <paper-input label="Edad" value="{{age}}"></paper-input>
+      <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
+      <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
+      <paper-input label="Repita contraseña" type="password" value="{{passwordConfirm}}"></paper-input>
       <paper-button on-tap="createAccount" class="pink">REGISTRAR</paper-button>
     </div>
   </template>
