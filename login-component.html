@@ -1,31 +1,43 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-style/color.html">
 
 <dom-module id="login-component">
   <template>
-    <style>
+    <style is="custom-style">
       :host {
         display: block;
         --paper-input-container-focus-color:red;
       }
+      paper-button.pink {
+        color: var(--paper-pink-a200);
+        --paper-button-ink-color: var(--paper-pink-a200);
+      }
+      paper-button.pink:hover {
+        background-color: var(--paper-pink-100);
+      }
     </style>
     <div class="sign" hidden="{{divShow}}">
       <h2>Iniciar sesíon</h2>
-      <h3>¿Aun no tienes cuenta?</h3>
-      <paper-button on-tap="changeDiv">Registrate</paper-button>
+      <p>¿Aun no tienes cuenta? Da clic</p>
+      <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
       <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
       <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
-      <paper-button on-tap="login">Iniciar sesíon</paper-button>
+      <paper-button on-tap="login" class="pink">Iniciar sesíon</paper-button>
     </div>
     <div class="createAccount"  hidden="{{!divShow}}">
       <h2>Registro</h2>
+      <p>¿Ya tienes cuenta? Da clic</p>
+      <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
       <h2>Datos de usuario</h2>
-      <paper-input label="Nombre Completo" value="{{name}}"></paper-input>
+      <paper-input label="Nombres" value="{{name}}"></paper-input>
+      <paper-input label="Apellidos" value="{{lastName}}"></paper-input>
+      <paper-input label="Edad" value="{{age}}"></paper-input>
       <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
       <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
       <paper-input label="Repita contraseña" type="password" value="{{passwordConfirm}}"></paper-input>
-      <paper-button on-tap="createAccount">REGISTRAR</paper-button>
+      <paper-button on-tap="createAccount" class="pink">REGISTRAR</paper-button>
     </div>
   </template>
 
@@ -58,36 +70,48 @@
             type:String,
             value:''
           },
+          lastName:{
+            type:String,
+            value:''
+          },
+          age:{
+            type: String,
+            value:''
+          },
+          picture:{
+            type: String,
+            value:''
+          },
           divShow:{
             type: Boolean,
             value: false
           }
+
         };
       }
       login(){
-        if (this.username === 'Leonidas92' && this.password === 'Polymer') {
-            alert('Login EXITOSO Usuario: '+ this.username + ' Pass: '+ this.password)
-            this.username = ''
-            this.password = ''
-        } else {
-            alert('El usuario y/o contraseña con incorrectos, intente nuevamente')
-        }
+        this.dispatcherEvent(new CustomEvent('login-user',{
+          bubbles:false,
+          composed: false,
+          detail:{
+            username: this.username,
+            password: this.password
+          }
+        }));
       }
       createAccount(){
-        if (this.password !== '' || this.passwordConfirm !=='') {
-          if (this.password === this.passwordConfirm) {
-            alert('Registro EXITOSO: '+ this.passwordConfirm + ' Pass: '+ this.password)
-            this.username = ''
-            this.password = ''
-            this.passwordConfirm =''
-            this.name = ''
-            this.divShow = false;
-          } else {
-              alert('Las contraseñas no coinciden, intente nuevamente')
+        this.dispatcherEvent(new CustomEvent('register-user',{
+          bubbles:false,
+          composed:false,
+          detail:{
+            username: this.username,
+            password: this.password,
+            name: this.name,
+            lastName: this.lastName,
+            age: this.age,
+            image: this.picture
           }
-        } else {
-              alert('Ingrese las contraseñas')
-        }
+        }));
       }
       changeDiv(){
         this.divShow = !this.divShow;
