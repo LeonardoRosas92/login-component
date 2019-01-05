@@ -10,6 +10,9 @@
         display: block;
         --paper-input-container-focus-color:red;
       }
+      .container{
+        width: 100%;
+      }
       paper-button.pink {
         color: var(--paper-pink-a200);
         --paper-button-ink-color: var(--paper-pink-a200);
@@ -17,27 +20,44 @@
       paper-button.pink:hover {
         background-color: var(--paper-pink-100);
       }
+      .sign{
+        border: 2px solid #2E64FE;
+        border-radius: 15px;
+        padding: 10px;
+        width: 50%;
+        margin: auto;
+      }
+
+      .createAccount{
+        border: 2px solid #2E64FE;
+        border-radius: 15px;
+        padding: 10px;
+        width: 50%;
+        margin: auto;
+      }
     </style>
-    <div class="sign" hidden="{{divShow}}">
-      <h2>Iniciar sesíon</h2>
-      <p>¿Aun no tienes cuenta? Da clic</p>
-      <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
-      <paper-input label="[[languageSelected.name]]" value="{{username}}"></paper-input>
-      <paper-input label="[[languageSelected.lastName]]" type="password" value="{{password}}"></paper-input>
-      <paper-button on-tap="login" class="pink">[[languageSelected.sesion]]</paper-button>
-    </div>
-    <div class="createAccount"  hidden="{{!divShow}}">
-      <h2>Registro</h2>
-      <p>¿Ya tienes cuenta? Da clic</p>
-      <paper-button on-tap="changeDiv" class="pink">Aqui</paper-button>
-      <h2>Datos de usuario</h2>
-      <paper-input label="Nombres" value="{{name}}"></paper-input>
-      <paper-input label="Apellidos" value="{{lastName}}"></paper-input>
-      <paper-input label="Edad" value="{{age}}"></paper-input>
-      <paper-input label="Nombre de usuario" value="{{username}}"></paper-input>
-      <paper-input label="Contraseña" type="password" value="{{password}}"></paper-input>
-      <paper-input label="Repita contraseña" type="password" value="{{passwordConfirm}}"></paper-input>
-      <paper-button on-tap="createAccount" class="pink">REGISTRAR</paper-button>
+    <div class="container">
+        <div class="sign" hidden="{{divShow}}">
+            <h2>[[language.sesion]]</h2>
+            <p>[[language.signIn]]</p>
+            <paper-button on-tap="changeDiv" class="pink">[[language.here]]</paper-button>
+            <paper-input label="[[language.user]]" value="{{username}}"></paper-input>
+            <paper-input label="[[language.password]]" type="password" value="{{password}}"></paper-input>
+            <paper-button on-tap="login" class="pink">[[language.sesion]]</paper-button>
+          </div>
+          <div class="createAccount"  hidden="{{!divShow}}">
+            <h2>[[language.label]]</h2>
+            <p>[[language.account]]</p>
+            <paper-button on-tap="changeDiv" class="pink">[[language.here]]</paper-button>
+            <h2>[[language.data]]</h2>
+            <paper-input label="[[language.name]]" value="{{name}}"></paper-input>
+            <paper-input label="[[language.lastName]]" value="{{lastName}}"></paper-input>
+            <paper-input label="[[language.age]]" value="{{age}}"></paper-input>
+            <paper-input label="[[language.user]]" value="{{username}}"></paper-input>
+            <paper-input label="[[language.password]]" type="password" value="{{password}}"></paper-input>
+            <paper-input label="[[language.confirmPassword]]" type="password" value="{{passwordConfirm}}"></paper-input>
+            <paper-button on-tap="createAccount" class="pink">[[language.register]]</paper-button>
+          </div>
     </div>
   </template>
 
@@ -80,21 +100,22 @@
           },
           picture:{
             type: String,
-            value:''
+            value:'https://www.travelcontinuously.com/wp-content/uploads/2018/04/empty-avatar.png'
           },
           divShow:{
             type: Boolean,
             value: false
           },
-          languageSelected:{
+          language:{
             type: Object,
-            value: []
+            value: [],
           }
 
         };
       }
+
       login(){
-        this.dispatcherEvent(new CustomEvent('login-user',{
+        this.dispatchEvent(new CustomEvent('login-user',{
           bubbles:false,
           composed: false,
           detail:{
@@ -104,7 +125,7 @@
         }));
       }
       createAccount(){
-        this.dispatcherEvent(new CustomEvent('register-user',{
+        this.dispatchEvent(new CustomEvent('register-user',{
           bubbles:false,
           composed:false,
           detail:{
@@ -112,10 +133,12 @@
             password: this.password,
             name: this.name,
             lastName: this.lastName,
+            passwordConfirm:this.passwordConfirm,
             age: this.age,
             image: this.picture
           }
         }));
+        this.changeDiv();
       }
       changeDiv(){
         this.divShow = !this.divShow;
