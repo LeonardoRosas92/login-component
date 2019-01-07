@@ -13,37 +13,44 @@
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
+    <test-fixture id="Login-Test">
       <template>
-        <login-component></login-component>
+        <login-component password="123" username="admin"></login-component>
       </template>
     </test-fixture>
 
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <login-component prop1="new-prop1"></login-component>
-      </template>
-    </test-fixture>
+    <test-fixture id="Register-Test">
+        <template>
+          <login-component password="123" username="admin" name="Leonardo" lastName="Rosas" password-confirm="123" age="26" image="https://www.travelcontinuously.com/wp-content/uploads/2018/04/empty-avatar.png"></login-component>
+        </template>
+      </test-fixture>
 
     <script>
       suite('login-component', () => {
 
-        test('instantiating the element with default properties works', () => {
-          const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'login-component');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello login-component!');
+        test('Login user', (done) => {
+          const element = fixture('Login-Test');
+          element.addEventListener('login-user', (event) => {
+            assert.equal(event.detail.username,'admin');
+            assert.equal(event.detail.password,'123');
+            done();
+          })
+          element.login();
         });
 
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
+      });
+
+      suite('register-component', () => {
+
+      test('Register user', (done) => {
+        const element = fixture('Register-Test');
+        element.addEventListener('register-user', (event) => {
+          assert.notEqual(event.detail.username,'');
+          assert.equal(event.detail.password,event.detail.passwordConfirm);
+          done();
+        })
+        element.createAccount();
+      });
 
       });
     </script>
