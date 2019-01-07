@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LeonardoRosas92/login-component.svg?branch=master)](https://travis-ci.org/LeonardoRosas92/login-component)
+
 # \<login-component\>
 
 It is a component where a Login of an application is made, in case it is a new user it will allow to show a form to register a new user.
